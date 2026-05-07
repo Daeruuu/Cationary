@@ -1,25 +1,29 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocktail API</title>
+    <title>English Dictionary</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Vorlage für interaktive Medien II</h1>
-
+    <header class="container">
+        <h1>English Dictionary</h1>
+        <p>Search for an English word and get definitions, examples, synonyms, and antonyms.</p>
     </header>
-    <main>
-        <h2>Main Content</h2>
-        <p>This is the main content of the page.</p>
 
+    <main class="container">
+        <section class="card">
+            <form id="searchForm" class="search-form">
+                <label for="wordInput">Search word</label>
+                <div class="search-row">
+                    <input id="wordInput" name="word" type="text" placeholder="e.g. happy" required>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+        </section>
     </main>
-    <footer>
-        <p>This is the footer of the page.</p>
 
-    </footer>
     <script src="js/script.js" type="module"></script>
 </body>
 </html>
