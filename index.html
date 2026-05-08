@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Dictionary</title>
+    <title>Cationary</title>
+    
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+    
 </head>
 <body>
-    <header class="container">
-        <h1>English Dictionary</h1>
-        <p>Search for an English word and get definitions, examples, synonyms, and antonyms.</p>
+    <header>
+        <h1>Cationary</h1>
+        <img src="img/Cationary.png" alt="Cationary Logo" class="logo">
+        
     </header>
 
     <main class="container">
-        <section class="card">
+        <section class="search-card">
             <form id="searchForm" class="search-form">
-                <label for="wordInput">Search word</label>
+                <!-- <label for="wordInput">Search word</label> -->
                 <div class="search-row">
-                    <input id="wordInput" name="word" type="text" placeholder="e.g. happy" required>
-                    <button type="submit">Search</button>
+                    <input id="wordInput" name="word" type="text" placeholder="Search..." required>
+                    <button type="submit" class="search-button">
+                        <img src="img/paw_print.png" alt="Search">
+                    </button>
                 </div>
             </form>
         </section>
-    </main>
+
+        <div class="info-card">
+            <img src="img/cat_gif2.gif" alt="Silly Cat 1" class="CatGif">  
+            <p>A dictionary for the English Language... <br> but explained by Cats</p>
+            <img src="img/cat_gif1.gif" alt="Silly Cat 1" class="CatGif">  
+        </div>
 
     <script src="js/script.js" type="module"></script>
 </body>

@@ -63,7 +63,6 @@ header{
     height: auto;
     object-fit: contain;
 }
-
 .container {
     width: min(900px, 90%);
     margin: 1.2rem auto;
@@ -72,6 +71,15 @@ header{
 h1, h2, h3, h4 {
     margin-top: 0;
 }
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
 
 .search-card{
     border: 50px solid transparent;
@@ -109,6 +117,14 @@ input[type="text"] {
     color: var(--text);
 }
 
+button {
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+}
 
 .search-button {
     background: transparent;
@@ -126,3 +142,53 @@ input[type="text"] {
     height: 100px;
     display: block;
 }
+
+.word-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.phonetic {
+    color: var(--muted);
+    margin: 0;
+}
+
+.part-block {
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+}
+
+.part:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+ol {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+}
+
+.example {
+    color: var(--muted);
+    margin-top: 0.25rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.sr-only {
+    position: absolute;
+    left: -9999px;
+}
+
+a {
+    color: #93c5fd;
+}
+
+

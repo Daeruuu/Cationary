@@ -58,6 +58,9 @@ async function loadWord(inputWord) {
 
     // Show a loading message to the user
 
+    history.replaceState({}, "", `detail.html?word=${encodeURIComponent(word)}`); 
+    // update URL without reload
+    
     try{
         const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
         const data = await res.json();
@@ -86,7 +89,7 @@ async function loadWord(inputWord) {
             Status.innerHTML = `No entry found. <a href="index.html">Back to home page</a>`;
         }
     }
-    
+
 }
 
     const wordTitle = document.getElementById("wordTitle");
