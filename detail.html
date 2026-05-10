@@ -13,30 +13,40 @@
 
 <body>
 
-    <header class="container">
-        <h1>English Dictionary</h1>
-        <form id="searchForm" class="search-form inline">
-            <label for="wordInput" class="sr-only">Search a new word</label>
-            <div class="search-row">
-                <input id="wordInput" name="word" type="text" placeholder="Search a new word..." required>
-                <button type="submit">Search</button>
-            </div>
-        </form>
+    <header>
+
+        <a href="index.html" class="logo-link">
+            <h1>Cationary</h1>
+            <img src="img/Cationary.png" alt="Cationary logo" class="logo">
+        </a>
+
     </header>
 
 <!-- gleich Search form eigentlech wie ufder Home page -->
 
     <main class="container">
+
+        <form id="searchForm" class="search-form inline">
+            <label for="wordInput" class="sr-only">Search a new word</label>
+            <div class="search-row">
+                <input id="wordInput" name="word" type="text" placeholder="Search a new word..." required>
+                <button type="submit" class="search-button">
+                     <img src="img/paw_print.png" alt="Search">
+                </button>
+            </div>
+        </form>
+
         <section id="status" class="card"></section>
 
         <section id="wordCard" class="card hidden">
-            <div class="word-top">
-                <div>
-                    <h2 id="wordTitle"></h2>
-                    <p id="phoneticText" class="phonetic"></p>
+                <div class="word-top">
+                    <img src="img/cat1.png" alt="Silly Cat" class="silly_cat">
+                        <div class="bubble">
+                            <h2 id="wordTitle"> </h2>
+                            <div id="audioContainer"></div>
+                            <p id="phoneticText" class="phonetic"></p>
+                        </div>
                 </div>
-                <div id="audioContainer"></div>
-            </div>
         </section>
 
 <!-- i dem Container isch z Wort, Phonetic und Audio Container, d class "card hidden" isch am afang da, wenn e Wort gsuucht wird, wird die class "hidden" entfernt und die Wortdetails werde ahzeigt, nur wes die details oh gitt, wird die section sichtbar. -->
@@ -50,8 +60,8 @@
 
         <section id="relationsSection" class="card hidden">
             <h3>Synonyms & Antonyms</h3>
-            <p><strong>Synonyms:</strong> <span id="synonymsText">-</span></p>
-            <p><strong>Antonyms:</strong> <span id="antonymsText">-</span></p>
+            <p class="Synonym"><strong>Synonyms:</strong> <span id="synonymsText">-</span></p>
+            <p class="Antonym"><strong>Antonyms:</strong> <span id="antonymsText">-</span></p>
         </section>
 <!-- hie si no d Synonym und d Antonym -->
 
@@ -60,4 +70,14 @@
     <script src="js/script.js" type="module"></script>
 
 </body>
+
+<footer class="container">
+        <h5>Should we explain another <br> word to you?</h5>
+            <a href="index.html" class="logo-link">
+                <img src="img/pfeil.svg" alt="Pfeil" class="pfeil">
+            </a>
+        <img src="img/cat1.png" alt="Silly Cat" class="silly_cat" id="silly_cat2">
+
+</footer>
 </html>
+

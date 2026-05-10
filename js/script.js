@@ -92,6 +92,7 @@ async function loadWord(inputWord) {
 
 }
 
+
     const wordTitle = document.getElementById("wordTitle");
     const phoneticText = document.getElementById("phoneticText");
     const audioContainer = document.getElementById("audioContainer");
@@ -102,16 +103,36 @@ async function loadWord(inputWord) {
     const meaningsSection = document.getElementById("meaningsSection");
     const relationsSection = document.getElementById("relationsSection");
 
+    function setRandomCat() {
+    const imgs = document.querySelectorAll('.silly_cat');
+    if (!imgs.length) return;
+    const count = 28;
+    const n = Math.floor(Math.random() * count) + 1;
+    const src = `img/cat${n}.png`;
+    imgs.forEach(img => { img.src = src; img.alt = `Silly Cat ${n}`; });
+}
+
+// pick a random cat image (expects img/cat1.png ... img/cat28.png) Each time we render a new word entry, we call setRandomCat() to change the cat image.
+
 function renderEntry(entry) {
+
+    setRandomCat(); // change cat image each time we render the entry
 
     const phonetic = entry.phonetic || entry.phonetics?.find((p) => p.text)?.text || "No phonetic spelling available";
     const audio = entry.phonetics?.find((p) => p.audio)?.audio || "";
 
     // This function extracts the phonetic spelling and audio URL from the entry data. It checks for the presence of these properties and provides fallback values if they are not available.
 
-    if (wordTitle) wordTitle.textContent = entry.word || "-";
+    if (wordTitle) {
+        const w = entry.word || "this word";
+        wordTitle.textContent = `How is "${w}" pronounced?`;
+    }
 
-    if (phoneticText) phoneticText.textContent = phonetic || "No phonetic available";
+
+    if (phoneticText) {
+        const p = phonetic || "No phonetic available";
+        phoneticText.textContent = `Phonetic spelling: ${p}`;
+    }
 
     if (audioContainer) {
         audioContainer.innerHTML = "";
@@ -170,14 +191,13 @@ function renderEntry(entry) {
             definitionText.className = "definition-text";
             definitionText.textContent = `${index + 1}. ${definition.definition || "-"}`;
 
-            const example = document.createElement("p");
-            example.className = "example";
-            example.textContent = definition.example ? `Example: ${definition.example}` : "";
+            const exampleText = document.createElement("p");
+            exampleText.className = "example";
+            exampleText.textContent = definition.example
+                ? `Example: ${definition.example}`
+                : "";
 
-            definitionCard.append(definitionText, example); 
-            
-            // changed from appendChild(defText, exampleText)
-
+            definitionCard.append(definitionText, exampleText);
             definitionsWrapper.appendChild(definitionCard);
         });
 
@@ -230,4 +250,3 @@ document.addEventListener("DOMContentLoaded", () => {
         // attach detail-page handler and load ?word=...
     }
 });
-
