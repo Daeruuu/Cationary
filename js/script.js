@@ -1,6 +1,9 @@
 const form = document.getElementById("searchForm");
     const input = document.getElementById("wordInput");
     const Status = document.getElementById("status");
+    const footer = document.querySelector('footer');
+    let definitionCardObserver = null;
+    let relationCardObserver = null;
 
     function getFormWord(form) { 
     return new FormData(form).get("word")?.toString().trim();
@@ -37,7 +40,7 @@ const urlWord = new URLSearchParams(location.search).get("word");
         if (input) input.value = urlWord; 
         loadWord(urlWord); 
     } else if (Status) { 
-        tatus.textContent = "Please enter a word in the search field."; 
+        Status.textContent = "Please enter a word in the search field."; 
     } 
     //loads the word from the URL query parameter when the detail page is accessed directly. If a word is provided, it sets the input field and loads the word data. If no word is provided, it prompts the user to enter a word.
 
@@ -63,14 +66,23 @@ async function loadWord(inputWord) {
     
     try{
         const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-        const data = await res.json();
+        const data = await res.json().catch(() => null);
 
         console.log("API response:", data);
-        console.log("Meanings:", data[0]?.meanings);
+        console.log("Meanings:", data?.[0]?.meanings);
 
         
         if (!res.ok || !Array.isArray(data) || !data.length) {
-            throw new Error(data?.message || "Word not found.");
+            const message = data?.message || "Word not found.";
+
+            if (res.status === 404) {
+                if (Status) {
+                    Status.innerHTML = `No entry found. <a href="index.html">Back to home page</a>`;
+                }
+                hide(wordCard, meaningsSection, relationsSection, footer);
+                return;
+            }
+            throw new Error(message);
 
             // this checks whether the API result is valid: it must be a successful response, an array, and contain at least one entry. If not it shows the message "Word not found".
         }
@@ -78,15 +90,17 @@ async function loadWord(inputWord) {
         renderEntry(data[0]);
        if (Status) Status.textContent = "";
 
-        // If the data is valid, it     renders the first entry and clears the status message 
+        // If the data is valid, it renders the first entry and clears the status message 
         // 1. API returns data
         // 2. data[0] is rendered
         // 3. loading text is removed from the status box
     }
+
     catch (NoEntryError){
         console.error(NoEntryError);
         if (Status){
             Status.innerHTML = `No entry found. <a href="index.html">Back to home page</a>`;
+            hide(footer);
         }
     }
 
@@ -147,7 +161,7 @@ function renderEntry(entry) {
        }
 
        else{
-        audioContainer.textContent = "No audio available";
+        audioContainer.textContent = "No audio available :(";
        }
     }
 
@@ -187,17 +201,35 @@ function renderEntry(entry) {
             const definitionCard = document.createElement("article");
             definitionCard.className = "definition-card";
 
+            const definitionLabel = document.createElement("p");
+            definitionLabel.className = "definition-label";
+            definitionLabel.textContent = "Definition:";
+
             const definitionText = document.createElement("p");
             definitionText.className = "definition-text";
-            definitionText.textContent = `${index + 1}. ${definition.definition || "-"}`;
+            definitionText.textContent = definition.definition || "-";
 
-            const exampleText = document.createElement("p");
-            exampleText.className = "example";
-            exampleText.textContent = definition.example
-                ? `Example: ${definition.example}`
-                : "";
+            if (definition.example) {
+                const exampleLabel = document.createElement("p");
+                exampleLabel.className = "example-label";
+                exampleLabel.textContent = "Example:";
 
-            definitionCard.append(definitionText, exampleText);
+                const exampleText = document.createElement("p");
+                exampleText.className = "example-text";
+                exampleText.textContent = definition.example;
+
+                definitionCard.append(definitionLabel, definitionText, exampleLabel, exampleText);
+            } else {
+                const exampleLabel = document.createElement("p");
+                exampleLabel.className = "example-label";
+                exampleLabel.textContent = "Example:";
+
+                const exampleFallback = document.createElement("p");
+                exampleFallback.className = "example-fallback";
+                exampleFallback.textContent = "-";
+
+                definitionCard.append(definitionLabel, definitionText, exampleLabel, exampleFallback);
+            }
             definitionsWrapper.appendChild(definitionCard);
         });
 
@@ -206,6 +238,7 @@ function renderEntry(entry) {
         });
     }
 
+  
     const synSet = new Set(); // Create set for unique synonyms
     const antSet = new Set(); // Create set for unique antonyms
 
@@ -219,14 +252,71 @@ function renderEntry(entry) {
         });
     });
 
+ 
     if (synonymsText) synonymsText.textContent = synSet.size ? [...synSet].join(", ") : "None";
     if (antonymsText) antonymsText.textContent = antSet.size ? [...antSet].join(", ") : "None";
 
-    show(wordCard, meaningsSection, relationsSection); 
+    // Show all sections and then activate scroll-reveal animation for definition cards.
+    show(wordCard, meaningsSection, relationsSection, footer);
+    setupDefinitionCardAnimation(); 
+    setupRelationCardAnimation();
     
     // Show result sections after render
 
 }
+
+function setupDefinitionCardAnimation() {
+
+    const cards = document.querySelectorAll('.definition-card');
+    if (!cards.length) return;
+
+    if (definitionCardObserver) {
+        definitionCardObserver.disconnect();
+    }
+
+    definitionCardObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.18,
+        rootMargin: "0px 0px -6% 0px"
+    });
+
+    cards.forEach((card) => {
+        card.classList.remove('in-view');
+        definitionCardObserver.observe(card);
+    });
+}
+//trigger slide in animation for definition cards when they enter the viewport using IntersectionObserver. It observes each card and adds the "in-view" class when it becomes visible, which triggers the CSS animation.
+
+function setupRelationCardAnimation() {
+    const cards = document.querySelectorAll('.Synonym, .Antonym');
+    if (!cards.length) return;
+
+    if (relationCardObserver) {
+        relationCardObserver.disconnect();
+    }
+
+    relationCardObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.18,
+        rootMargin: "0px 0px -6% 0px"
+    });
+
+    cards.forEach((card) => {
+        card.classList.remove('in-view');
+        relationCardObserver.observe(card);
+    });
+}
+//same for synonym and antonym cards
 
 function hide(...els) {
     els.forEach((el) => el?.classList.add("hidden")); 
