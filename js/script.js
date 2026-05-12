@@ -4,6 +4,8 @@ const form = document.getElementById("searchForm");
     const footer = document.querySelector('footer');
     let definitionCardObserver = null;
     let relationCardObserver = null;
+    let catRainTimer = null;
+    let catRainTimeout = null;
 
     function getFormWord(form) { 
     return new FormData(form).get("word")?.toString().trim();
@@ -23,6 +25,54 @@ function searchWord(){
         // Redirect to detail page with word in query parameter
     })
 }
+
+function setupCatRain() {
+    const catGifs = document.querySelectorAll('.CatGif');
+    if (!catGifs.length) return;
+
+    catGifs.forEach((catGif) => {
+        catGif.addEventListener('click', () => {
+            startCatRain();
+        });
+    });
+}
+
+function startCatRain() {
+    const spawnCats = () => {
+        const catCount = 16;
+
+        for (let index = 0; index < catCount; index += 1) {
+            const cat = document.createElement('img');
+            const catNumber = Math.floor(Math.random() * 45) + 1;
+            cat.src = `img/cat${catNumber}.png`;
+            cat.alt = `Falling cat ${catNumber}`;
+            cat.className = 'rain-cat';
+            cat.style.left = `${Math.random() * 100}vw`;
+            cat.style.animationDuration = `${2.8 + Math.random() * 1.8}s`;
+            cat.style.animationDelay = `${Math.random() * 0.4}s`;
+
+            document.body.appendChild(cat);
+
+            cat.addEventListener('animationend', () => {
+                cat.remove();
+            });
+        }
+    };
+
+    spawnCats();
+
+
+    clearInterval(catRainTimer);
+    clearTimeout(catRainTimeout);
+    catRainTimer = setInterval(spawnCats, 450);
+
+    catRainTimeout = window.setTimeout(() => {
+        clearInterval(catRainTimer);
+        catRainTimer = null;
+        catRainTimeout = null;
+    }, 2200);
+}    
+// Keep the rain going for a short burst after the click.
 
 
 function setupDetailPage() {
@@ -53,7 +103,7 @@ async function loadWord(inputWord) {
 
     // Normalize the word: trim whitespace and convert to lowercase for consistent API requests
 
-    hide(wordCard, meaningsSection, relationsSection);
+    hide(wordCard, meaningsSection, relationsSection, footer);
 
     // Hide the result sections while loading new data
 
@@ -75,13 +125,21 @@ async function loadWord(inputWord) {
         if (!res.ok || !Array.isArray(data) || !data.length) {
             const message = data?.message || "Word not found.";
 
-            if (res.status === 404) {
-                if (Status) {
-                    Status.innerHTML = `No entry found. <a href="index.html">Back to home page</a>`;
+                if (res.status === 404) {
+                    if (Status) {
+                        Status.innerHTML = `
+                            <div class="no-word-error">
+                                <img src="img/not_a_cat.png" alt="No entry found" />
+                                <div class="error-texts">
+                                    <p class="error-message">That's not a word, buddy</p>
+                                    <p class="error-sub"><a href="index.html">Back to home page</a></p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    hide(wordCard, meaningsSection, relationsSection, footer);
+                    return;
                 }
-                hide(wordCard, meaningsSection, relationsSection, footer);
-                return;
-            }
             throw new Error(message);
 
             // this checks whether the API result is valid: it must be a successful response, an array, and contain at least one entry. If not it shows the message "Word not found".
@@ -99,7 +157,15 @@ async function loadWord(inputWord) {
     catch (NoEntryError){
         console.error(NoEntryError);
         if (Status){
-            Status.innerHTML = `No entry found. <a href="index.html">Back to home page</a>`;
+            Status.innerHTML = `
+                <div class="no-word-error">
+                    <img src="img/not_a_cat.png" alt="No entry found" />
+                    <div class="error-texts">
+                        <p class="error-message">That's not a word, buddy.</p>
+                        <p class="error-sub"><a href="index.html">Back to home page</a></p>
+                    </div>
+                </div>
+            `;
             hide(footer);
         }
     }
@@ -120,13 +186,13 @@ async function loadWord(inputWord) {
     function setRandomCat() {
     const imgs = document.querySelectorAll('.silly_cat');
     if (!imgs.length) return;
-    const count = 28;
+    const count = 45;
     const n = Math.floor(Math.random() * count) + 1;
     const src = `img/cat${n}.png`;
     imgs.forEach(img => { img.src = src; img.alt = `Silly Cat ${n}`; });
 }
 
-// pick a random cat image (expects img/cat1.png ... img/cat28.png) Each time we render a new word entry, we call setRandomCat() to change the cat image.
+// pick a random cat image (expects img/cat1.png ... img/cat45.png) Each time we render a new word entry, we call setRandomCat() to change the cat image.
 
 function renderEntry(entry) {
 
@@ -331,6 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const page = location.pathname.split("/").pop();
     if (page === "index.html" || page === "") {
         searchWord(); 
+        setupCatRain();
         
         // attach home-page submit handler
     }
