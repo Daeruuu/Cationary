@@ -499,3 +499,183 @@ transform: scaleX(-1);
     color: #93c5fd; 
     display: inline-block;
 }
+
+@media (max-width: 965px) {
+    .bubble {
+        padding: 1.5rem 2rem;
+        padding-left: 5rem;
+        padding-right: 5rem;
+        margin-bottom: 200px;
+    }
+
+    .silly_cat {
+        width: 200px;
+        height: 200px;
+        margin-top: 100px;
+    }
+
+    #wordInput {
+        font-size: 2rem;
+       
+    }
+
+    .search-button img {
+        height: 80px;
+        padding-right: 1rem;
+    }
+
+    .pfeil {
+        width: 150px;
+        margin-top: 2rem;
+    } 
+
+    footer{
+        h5{font-size: 2rem;
+    }
+}
+}
+
+@media (max-width: 750px) {
+  
+    header {
+        font-size: 1rem;
+       justify-content: center;
+        margin-left: 0;
+        width: 100%;
+        
+    }
+
+    #wordInput {
+        font-size: 2rem;
+        padding-right: 0rem;
+    }
+
+      .search-button img {
+        height: 60px;
+    }
+
+    .search-row{
+        gap: 0rem;
+        padding-right: 1rem;
+        margin-top: 2rem;
+    }
+
+    .bubble {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+     #audioContainer {
+     transform: scale(0.65);
+    }
+
+    h1{
+        font-size: 2rem;
+    }
+
+   #wordTitle{
+    font-size: 1rem;
+   }
+
+   h3{
+    font-size: 2rem;
+   }
+
+   h4{
+    font-size: 1.5rem;
+   }
+
+   p.definition-text, p.example-text {
+    font-size: 1rem; 
+   }
+
+   .definition-label {
+    font-size: 1.25rem;
+   }
+
+   .example-label {
+    font-size: 1.25rem;
+   }
+   .phonetic {
+    font-size: 0.75rem;
+   }
+
+   .Synonym, .Antonym {
+    padding: 1rem;
+    font-size: 1.25rem;
+   }
+
+   footer.container {
+    justify-content: center;
+    h5{
+            font-size: 1.25rem;
+        }
+   }
+
+}
+
+@media (max-width: 630px) {
+    
+    footer h5 {
+        flex: 0 0 100%;
+        margin-left: 0;
+        margin-bottom: 2rem;
+    }
+
+    footer .logo-link,
+    footer #silly_cat2 {
+        flex: 0 0 auto;
+    }
+
+    footer.container {
+        transform: none;
+    }
+
+      .search-form {
+        width: 100%;
+    }
+
+    .search-row {
+        margin-left: auto;
+        margin-right: auto;
+        width: min(100%, 24rem);
+        padding: 0.3rem 0.6rem;
+        gap: 0.2rem;
+        align-items: center;
+    }
+
+    #wordInput {
+        font-size: 1.3rem;
+        max-width: none;
+        min-width: 0;
+        padding-left: 0.9rem;
+    }
+
+    .search-button img {
+        height: 44px;
+    }
+
+     .word-top {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .silly_cat {
+        margin-top: 1rem;
+    }
+
+    .bubble {
+        margin-bottom: 1.5rem;
+    }
+
+    .bubble::before {
+        left: 50%;
+        bottom: -38px;
+        border-left: 24px solid transparent;
+        border-right: 24px solid transparent;
+        border-top: 38px solid var(--accent);
+        border-bottom: 0;
+        rotate: 0deg;
+        transform: translateX(-50%);
+    }
+}

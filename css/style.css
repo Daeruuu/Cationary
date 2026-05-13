@@ -156,5 +156,63 @@ input[type="text"] {
     }
 }
 
+@media (max-width: 1000px) {
+    .CatGif {
+        width: 180px;
+    }
+    
+    .info-card p {
+        font-size: 1.5rem;
+    }
+}
 
+@media (max-width: 750px) {
+    .CatGif {
+        width: 120px;
+    }
+    
+    .info-card p {
+        font-size: 1rem;
+        margin-bottom: 3rem;
+    }
 
+    h1{
+        font-size: 5rem;
+    }
+
+    .logo {
+        width: 150px;
+        height: 150px;
+    }
+
+    header{
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 0rem;
+    }
+
+    #wordInput {
+        font-size: 1.5rem;
+    }
+
+    .search-button img {
+        height: 60px;
+    }
+}
+
+@media (max-width: 520px) {
+    .info-card p {
+        order: -1;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        flex-basis: 100%;
+    }
+
+    .CatGif {
+        width: 150px;
+    }
+
+      .info-card p {
+        font-size: 1.5rem;
+    }
+}
