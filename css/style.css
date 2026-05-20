@@ -1,10 +1,9 @@
 :root {
     --bg: #FFEDBE;
     --card: #FDBA7C;
-    --text: black  ;
+    --text: black;
     --muted: black;
     --accent: #FC9A3F;
-    --border: pink;
 }
 
 * {

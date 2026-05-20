@@ -1,7 +1,7 @@
 :root {
     --bg: #FFEDBE;
     --card: #FDBA7C;
-    --text: black  ;
+    --text: black;
     --muted: black;
     --accent: #FC9A3F;
 }
@@ -27,13 +27,12 @@ header{
     margin-top: 2rem;
 
     h1 {
-        margin: 0;
+        margin: 0rem;
         align-self: center;
-    }
+    } 
 }
 
 .card {
-    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -108,16 +107,6 @@ input[type="text"] {
     display: block;
 }
 
-.search-button:hover img {
-    content: url("../img/paw_print2.png");
-}
-
-.search-button img {
-    width: auto;
-    height: 100px;
-    display: block;
-}
-
 .logo-link {
     text-decoration: none;
     color: inherit;
@@ -126,20 +115,6 @@ input[type="text"] {
     gap: 0.5rem;
     cursor: pointer;
 }
-
-/* .info-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    font-size: 2rem;
-    text-align: center;
-
-    p{
-        margin-top: 5rem;
-    }
-} */
 
 .silly_cat {
     width: 300px;
@@ -233,12 +208,11 @@ input[type="text"] {
 
 #wordCard {
     background-color: transparent;
-    border: none;
+    
 }
 
 #status.card {
     background-color: transparent;
-    border: none;
 }
 
 #audioContainer audio::-webkit-media-controls-enclosure {
@@ -275,7 +249,6 @@ p.definition-text, p.example-text, p {
 
 #meaningsSection {
     background-color: transparent;
-    border: none;
     margin-top: -5rem;
     
 }
@@ -328,7 +301,7 @@ p.definition-text, p.example-text, p {
 
 #relationsSection.card {
     background-color: transparent;
-    border: none;
+   
 }
 
 
@@ -368,7 +341,7 @@ p.definition-text, p.example-text, p {
 }
 /* slide-in animation for synonym and antonym cards */
 
-.part:first-child {
+.part-block:first-child {
     margin-top: 0;
     padding-top: 0;
     border-top: none;
@@ -447,7 +420,7 @@ a {
 footer {
     display: flex;
     align-items: center;
-    gap: -10rem;
+    gap: 0rem;
     flex-wrap: wrap;
     font-size: 1.5rem;
     text-align: center;
@@ -463,9 +436,9 @@ footer > * {
 }
 
 #silly_cat2 {
-margin: 0 0 0 0;
- -webkit-transform: scaleX(-1);
-transform: scaleX(-1);
+    margin: 0;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 
 }
 
