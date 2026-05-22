@@ -77,6 +77,8 @@ h1, h2, h3, h4 {
     border-image-source: url("../img/search_bar.svg");
     border-image-slice: 170;
     border-image-repeat: stretch;
+    transition: transform 0.18s ease;
+    will-change: transform;
 }
 
 .search-form label {
@@ -93,11 +95,21 @@ h1, h2, h3, h4 {
 #wordInput {
     font-size: 3rem;
     font-family: "Amatic SC";
+    transition: transform 0.18s ease;
+}
+
+.search-card:focus-within {
+    animation: search-pop 0.22s ease-out;
+    transform: translateY(-1px) scale(1.01);
 }
 
 #wordInput:focus {
     outline: none;
     box-shadow: none;
+}
+
+#wordInput:focus-visible {
+    outline: none;
 }
 
 input[type="text"] {
@@ -106,6 +118,18 @@ input[type="text"] {
     border: none;
     background-color: var(--bg);
     color: var(--text);
+}
+
+@keyframes search-pop {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-2px) scale(1.015);
+    }
+    100% {
+        transform: translateY(-1px) scale(1.01);
+    }
 }
 
 
@@ -192,6 +216,10 @@ input[type="text"] {
 
     #wordInput {
         font-size: 1.5rem;
+    }
+
+    #wordInput::placeholder {
+        font-size: 1.15rem;
     }
 
     .search-button img {
